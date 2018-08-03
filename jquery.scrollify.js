@@ -276,6 +276,7 @@ if touchScroll is false - update index
           clearTimeout(timeoutId);
         }
         if (!settings.fitToSection) {
+          manualScroll.hashToNearest();
           return true;
         }
 
@@ -289,7 +290,7 @@ if touchScroll is false - update index
           manualScroll.animateToNearest(false, true);
         }, settings.fitToSectionDelay);
       },
-      getNearest() {
+      getNearest: function() {
         top = $window.scrollTop();
         var i = 1,
           max = heights.length,
@@ -312,6 +313,13 @@ if touchScroll is false - update index
           index = closest;
           //index, instant, callbacks, toTop
           animateScroll(closest, instant, callbacks, false);
+        }
+      },
+      hashToNearest: function() {
+        var closest = manualScroll.getNearest();
+        if (closest !== index) {
+          index = closest;
+          window.location.hash = names[closest];
         }
       },
       wheelHandler: function(e) {
