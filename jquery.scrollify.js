@@ -265,7 +265,7 @@ if touchScroll is false - update index
         scrollable = true;
         if (scrolled) {
           //instant,callbacks
-          manualScroll.calculateNearest(false, true);
+          manualScroll.animateToNearest(false, true);
         }
       },
       handleScroll: function() {
@@ -286,10 +286,10 @@ if touchScroll is false - update index
           }
           scrollable = false;
           //instant,callbacks
-          manualScroll.calculateNearest(false, true);
+          manualScroll.animateToNearest(false, true);
         }, settings.fitToSectionDelay);
       },
-      calculateNearest: function(instant, callbacks) {
+      getNearest() {
         top = $window.scrollTop();
         var i = 1,
           max = heights.length,
@@ -304,6 +304,10 @@ if touchScroll is false - update index
             closest = i;
           }
         }
+        return closest;
+      },
+      animateToNearest: function(instant, callbacks) {
+        var closest = manualScroll.getNearest();
         if ((atBottom() && closest > index) || atTop()) {
           index = closest;
           //index, instant, callbacks, toTop
@@ -654,7 +658,7 @@ if touchScroll is false - update index
     } else {
       setTimeout(function() {
         //instant,callbacks
-        manualScroll.calculateNearest(true, false);
+        manualScroll.animateToNearest(true, false);
       }, 200);
     }
     if (heights.length) {
@@ -950,7 +954,7 @@ if touchScroll is false - update index
     disabled = false;
     if (initialised) {
       //instant,callbacks
-      manualScroll.calculateNearest(false, false);
+      manualScroll.animateToNearest(false, false);
     }
   };
   scrollify.isDisabled = function() {
