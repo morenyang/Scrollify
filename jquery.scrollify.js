@@ -67,6 +67,7 @@ if touchScroll is false - update index
     scrollable = false,
     locked = false,
     scrolled = false,
+    scrolling = false,
     manualScroll,
     swipeScroll,
     util,
@@ -116,6 +117,7 @@ if touchScroll is false - update index
     }
     if (names[index]) {
       scrollable = false;
+      scrolling = true;
       if (firstLoad === true) {
         settings.afterRender();
         firstLoad = false;
@@ -172,6 +174,7 @@ if touchScroll is false - update index
           .scrollTop(destination);
         if (callbacks) {
           settings.after(index, elements);
+          scrolling = false;
         }
       } else {
         locked = true;
@@ -216,6 +219,7 @@ if touchScroll is false - update index
             firstLoad = false;
             if (callbacks) {
               settings.after(index, elements);
+              scrolling = false;
             }
           });
       }
@@ -316,10 +320,37 @@ if touchScroll is false - update index
         }
       },
       hashToNearest: function() {
+        if (disabled === true) {
+          return true;
+        }
+        if (scrolling === true) {
+          return true;
+        }
         var closest = manualScroll.getNearest();
-        if (closest !== index) {
-          index = closest;
-          window.location.hash = names[closest];
+        var sameIndex = closest === currentIndex;
+        currentIndex = closest;
+        index = closest;
+        if (names[closest]) {
+          if (
+            !sameIndex &&
+            settings.updateHash &&
+            settings.sectionName &&
+            !(firstLoad === true && closest == 0)
+          ) {
+            if (history.pushState) {
+              try {
+                history.replaceState(null, null, names[closest]);
+              } catch (e) {
+                if (window.console) {
+                  console.warn(
+                    'Scrollify warning: Page must be hosted to manipulate the hash value.'
+                  );
+                }
+              }
+            } else {
+              window.location.hash = names[closest];
+            }
+          }
         }
       },
       wheelHandler: function(e) {
