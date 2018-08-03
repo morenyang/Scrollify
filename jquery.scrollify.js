@@ -350,6 +350,9 @@ if touchScroll is false - update index
             } else {
               window.location.hash = names[closest];
             }
+            if (!sameIndex) {
+              settings.after(index, elements);
+            }
           }
         }
       },
