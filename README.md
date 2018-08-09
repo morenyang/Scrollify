@@ -63,6 +63,11 @@ $.scrollify({
     overflowScroll: true,
     updateHash: true,
     touchScroll:true,
+    fitToSection: true,
+    fitToSectionDelay: 200,
+    responsiveWidth: 0,
+    responsiveHeight: 0,
+    keepHeightResponsive: true,
     before:function() {},
     after:function() {},
     afterResize:function() {},
@@ -104,6 +109,21 @@ A boolean to define whether Scrollify updates the browser location hash when scr
 
 `touchScroll`
 A boolean to define whether Scrollify handles touch scroll events. True by default.
+
+`fitToSection`
+A boolean to define whether aligns sections after user scrolling. True by default.
+
+`fitToSectionDelay`
+A number to define the delay of align sections action after scrolling.
+
+`responsiveWidth`
+A number to define the responsive width. If the width of window small than it, user can scroll the window freely.
+
+`responsiveHeight`
+A number to define the responsive height. If the height of window small than it, user can scroll the window freely.
+
+`keepHeightResponsive`
+A boolean to define should keep section height after resize an enable freely scroll. 
 
 `before(index, sections)`
 A callback that is fired before a section is scrolled to. Arguments include the index of the section and an array of all section elements.

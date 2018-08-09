@@ -128,7 +128,7 @@
     $(function () {
       $(".panel").css({ "height": $(window).height() });
 
-      $.scrollify({ section: ".panel" , fitToSection: false});
+      $.scrollify({ section: ".panel" , fitToSection: false, responsiveHeight: 500,});
 
       $(".scroll").click(function (e) {
         e.preventDefault();

@@ -100,6 +100,9 @@ if touchScroll is false - update index
       touchScroll: true,
       fitToSection: true,
       fitToSectionDelay: 200,
+      responsiveWidth: 0,
+      responsiveHeight: 0,
+      keepHeightResponsive: true,
       before: function() {},
       after: function() {},
       afterResize: function() {},
@@ -679,8 +682,20 @@ if touchScroll is false - update index
         util.refresh(false, false);
       },
       handleResize: function() {
+        var shouldScroll = false;
+        if (!matchResponsive()) {
+          disabled = true;
+          calculatePositions(false, false);
+          !settings.keepHeightResponsive && destoryHeight();
+          return false;
+        } else {
+          if(disabled = true){
+            shouldScroll = true;
+            disabled = false;
+          }
+        }
         //callbacks, scroll
-        util.refresh(true, false);
+        util.refresh(true, shouldScroll);
       },
       handleOrientation: function() {
         //callbacks, scroll
@@ -689,10 +704,34 @@ if touchScroll is false - update index
     };
     settings = $.extend(settings, options);
 
+    function matchResponsive() {
+      if (
+        (settings.responsiveHeight &&
+          settings.responsiveHeight > $window.height()) ||
+        (settings.responsiveWidth && settings.responsiveWidth > $window.width())
+      ) {
+        return false;
+      }
+      return true;
+    }
+
+    function destoryHeight() {
+      if (settings.setHeights) {
+        $(settings.section).each(function() {
+          $(this).css('height', 'auto');
+        });
+      }
+    }
+
     //retain position
     sizePanels(false);
 
     calculatePositions(false, true);
+
+    if (!matchResponsive()) {
+      disabled = true;
+      !settings.keepHeightResponsive && destoryHeight();
+    }
 
     if (true === hasLocation) {
       //index, instant, callbacks, toTop
