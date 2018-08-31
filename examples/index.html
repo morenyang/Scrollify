@@ -111,7 +111,7 @@
       </dl>
     </div>
   </section>
-  <section class="panel methods" data-section-name="methods">
+  <section class="panel1 methods" data-section-name="methods">
     <div class="inner">
       <h2>Methods</h2>
       <p>The move method can be used to scroll to a particular section. This can take the index of the section, or the name
@@ -128,7 +128,7 @@
     $(function () {
       $(".panel").css({ "height": $(window).height() });
 
-      $.scrollify({ section: ".panel" , fitToSection: false, responsiveHeight: 500,});
+      $.scrollify({ section: ".panel" , fitToSection: false, responsiveHeight: 500, });
 
       $(".scroll").click(function (e) {
         e.preventDefault();

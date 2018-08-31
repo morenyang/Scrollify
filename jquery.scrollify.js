@@ -277,6 +277,9 @@ if touchScroll is false - update index
       },
       handleScroll: function() {
         if (disabled === true) {
+          if (!matchResponsive()) {
+            manualScroll.hashToNearest();
+          }
           return true;
         }
         if (timeoutId) {
@@ -323,7 +326,7 @@ if touchScroll is false - update index
         }
       },
       hashToNearest: function() {
-        if (disabled === true) {
+        if (disabled === true && matchResponsive()) {
           return true;
         }
         if (scrolling === true) {
@@ -689,7 +692,7 @@ if touchScroll is false - update index
           !settings.keepHeightResponsive && destoryHeight();
           return false;
         } else {
-          if(disabled = true){
+          if (disabled == true) {
             shouldScroll = true;
             disabled = false;
           }
