@@ -135,7 +135,7 @@ if touchScroll is false - update index
       }
       interstitialIndex = 1;
       destination = heights[index];
-      if (firstLoad === false && currentIndex > index && toTop === false) {
+      if (firstLoad === false && toTop === false) {
         //We're going backwards
         if (overflow[index]) {
           portHeight = getportHeight();
@@ -674,10 +674,11 @@ if touchScroll is false - update index
           sizePanels(true);
           //scroll, firstLoad
           calculatePositions(scroll, false);
+          animateScroll(currentIndex, true, false, false)
           if (withCallback) {
             settings.afterResize();
           }
-        }, 400);
+        }, 10);
       },
       handleUpdate: function() {
         //callbacks, scroll
